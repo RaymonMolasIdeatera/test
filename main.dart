@@ -17,7 +17,7 @@ void main() async {
     // Initialize environment variables
     await dotenv.load(fileName: ".env");
     AppLogger.info('Environment variables loaded');
-    print('🔧 Supabase URL: ${dotenv.env['SUPABASE_URL']}');
+    AppLogger.info('Supabase URL: ${dotenv.env['SUPABASE_URL']}');
 
     // Initialize Hive for local storage
     await Hive.initFlutter();
@@ -36,19 +36,19 @@ void main() async {
       final AuthChangeEvent event = data.event;
       final Session? session = data.session;
       
-      print('🔄 Auth state changed: $event');
+      AppLogger.info('Auth state changed: $event');
       
       if (event == AuthChangeEvent.signedIn && session != null) {
-        print('✅ User signed in: ${session.user.email}');
-        print('   User ID: ${session.user.id}');
-        print('   Session expires: ${DateTime.fromMillisecondsSinceEpoch(session.expiresAt! * 1000)}');
+        AppLogger.info('✅ User signed in: ${session.user.email}');
+        AppLogger.info('   User ID: ${session.user.id}');
+        AppLogger.info('   Session expires: ${DateTime.fromMillisecondsSinceEpoch(session.expiresAt! * 1000)}');
         
         // Aquí puedes agregar lógica adicional después del signin
         // Por ejemplo, verificar si el usuario está registrado en la tabla clients
       } else if (event == AuthChangeEvent.signedOut) {
-        print('👋 User signed out');
+        AppLogger.info('👋 User signed out');
       } else if (event == AuthChangeEvent.tokenRefreshed) {
-        print('🔄 Token refreshed');
+        AppLogger.info('🔄 Token refreshed');
       }
     });
 

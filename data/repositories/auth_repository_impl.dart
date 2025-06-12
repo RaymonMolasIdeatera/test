@@ -1,13 +1,13 @@
 import 'package:dartz/dartz.dart';
-import '../../../core/error/failures.dart';
-import '../../../core/error/exceptions.dart';
-import '../../../core/network/network_info.dart';
-import '../datasources/remote/auth_remote_data_source.dart';
-import '../datasources/local/auth_local_data_source.dart';
-import '../../../domain/repositories/auth_repository.dart';
-import '../../../domain/entities/auth_session.dart';
-import '../../../domain/entities/user.dart';
-import '../models/auth_session_model.dart';
+import 'package:prueba/core/error/failures.dart';
+import 'package:prueba/core/error/exceptions.dart';
+import 'package:prueba/core/network/network_info.dart';
+import 'package:prueba/data/datasources/remote/auth_remote_data_source.dart';
+import 'package:prueba/data/datasources/local/auth_local_data_source.dart';
+import 'package:prueba/domain/repositories/auth_repository.dart';
+import 'package:prueba/domain/entities/auth_session.dart';
+import 'package:prueba/domain/entities/user.dart';
+import 'package:prueba/data/models/auth_session_model.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
@@ -34,6 +34,29 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<Either<Failure, AuthSession>> loginWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final session = await remoteDataSource.loginWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+        await localDataSource.cacheSession(_toAuthSessionModel(session));
+        return Right(session);
+      } on AuthenticationException catch (e) {
+        return Left(AuthenticationFailure(e.message));
+      } on ServerException catch (e) {
+        return Left(ServerFailure(e.message));
+      }
+    } else {
+      return const Left(NetworkFailure('No internet connection'));
+    }
+  }
+
+  @override
   Future<Either<Failure, AuthSession>> signInWithBiometric() async {
     if (await networkInfo.isConnected) {
       try {
@@ -51,7 +74,7 @@ class AuthRepositoryImpl implements AuthRepository {
         if (session != null) {
           return Right(session);
         } else {
-          return Left(NetworkFailure('No cached session available'));
+          return const Left(NetworkFailure('No cached session available'));
         }
       } on CacheException catch (e) {
         return Left(CacheFailure(e.message));
@@ -72,11 +95,9 @@ class AuthRepositoryImpl implements AuthRepository {
         return Left(ServerFailure(e.toString()));
       }
     } else {
-      return Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('No internet connection'));
     }
   }
-
-  // MÉTODOS FALTANTES AGREGADOS:
 
   @override
   Future<Either<Failure, AuthSession>> loginWithBiometric() async {
@@ -110,7 +131,7 @@ class AuthRepositoryImpl implements AuthRepository {
         return Left(ServerFailure(e.toString()));
       }
     } else {
-      return Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('No internet connection'));
     }
   }
 
@@ -141,7 +162,7 @@ class AuthRepositoryImpl implements AuthRepository {
         return Left(ServerFailure(e.toString()));
       }
     } else {
-      return Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('No internet connection'));
     }
   }
 
@@ -167,7 +188,7 @@ class AuthRepositoryImpl implements AuthRepository {
         return Left(ServerFailure(e.toString()));
       }
     } else {
-      return Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('No internet connection'));
     }
   }
 
@@ -196,7 +217,7 @@ class AuthRepositoryImpl implements AuthRepository {
         return Left(ServerFailure(e.toString()));
       }
     } else {
-      return Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('No internet connection'));
     }
   }
 
@@ -240,7 +261,7 @@ class AuthRepositoryImpl implements AuthRepository {
         return Left(ServerFailure(e.toString()));
       }
     } else {
-      return Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('No internet connection'));
     }
   }
 }
