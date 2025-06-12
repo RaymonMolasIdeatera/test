@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import '../../../core/error/failures.dart';
-import '../../entities/auth_session.dart';
-import '../../repositories/auth_repository.dart';
-import '../usecase.dart';
+import 'package:prueba/core/error/failures.dart';
+import 'package:prueba/domain/entities/auth_session.dart';
+import 'package:prueba/domain/repositories/auth_repository.dart';
+import 'package:prueba/domain/usecases/usecase.dart';
 
 class RegisterUser implements UseCase<AuthSession, RegisterUserParams> {
   final AuthRepository repository;
@@ -11,19 +11,18 @@ class RegisterUser implements UseCase<AuthSession, RegisterUserParams> {
 
   @override
   Future<Either<Failure, AuthSession>> call(RegisterUserParams params) async {
-    try {
-      return await repository.registerWithEmailAndPassword(
-        email: params.email,
-        password: params.password,
-        name: params.name,
-        phone: params.phone,
-        invitationCode: params.invitationCode,
-        metadata: params.metadata,
-      );
-    } catch (e) {
-      // CORRECCIÓN LÍNEA 24: Remover 'message:' y usar solo el string
-      return Left(ServerFailure(e.toString()));
-    }
+    // --- INICIO DE LA CORRECCIÓN ---
+    // Se elimina el bloque try-catch. Ahora simplemente llamamos al repositorio
+    // y dejamos que su resultado (sea éxito o Failure) fluya hacia el BLoC.
+    return await repository.registerWithEmailAndPassword(
+      email: params.email,
+      password: params.password,
+      name: params.name,
+      phone: params.phone,
+      invitationCode: params.invitationCode,
+      metadata: params.metadata,
+    );
+    // --- FIN DE LA CORRECCIÓN ---
   }
 }
 
@@ -45,7 +44,7 @@ class RegisterUserParams {
   });
 }
 
-// Nuevo use case para registro con teléfono
+// El resto de las clases en este archivo no necesitan cambios.
 class RegisterWithPhone implements UseCase<void, RegisterWithPhoneParams> {
   final AuthRepository repository;
 
@@ -62,7 +61,6 @@ class RegisterWithPhone implements UseCase<void, RegisterWithPhoneParams> {
       );
       return const Right(null);
     } catch (e) {
-      // CORRECCIÓN LÍNEA 64: Remover 'message:' y usar solo el string
       return Left(ServerFailure(e.toString()));
     }
   }
@@ -82,7 +80,6 @@ class RegisterWithPhoneParams {
   });
 }
 
-// Use case para verificar código de teléfono
 class VerifyPhoneAndRegister
     implements UseCase<AuthSession, VerifyPhoneParams> {
   final AuthRepository repository;
@@ -100,7 +97,6 @@ class VerifyPhoneAndRegister
         metadata: params.metadata,
       );
     } catch (e) {
-      // CORRECCIÓN LÍNEA 101: Remover 'message:' y usar solo el string
       return Left(ServerFailure(e.toString()));
     }
   }

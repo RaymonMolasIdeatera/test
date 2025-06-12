@@ -72,9 +72,13 @@ class _SplashScreenState extends State<SplashScreen>
         if (state is AuthAuthenticated) {
           Navigator.of(context).pushReplacementNamed(AppConstants.homeRoute);
         } else if (state is AuthUnauthenticated) {
+          // --- INICIO DE LA CORRECCIÓN ---
+          // Cambiamos la ruta de onboarding a la ruta de autenticación,
+          // que ahora es nuestra pantalla de inicio para usuarios no logueados.
           Navigator.of(
             context,
-          ).pushReplacementNamed(AppConstants.onboardingRoute);
+          ).pushReplacementNamed(AppConstants.authRoute);
+          // --- FIN DE LA CORRECCIÓN ---
         }
       },
       child: Scaffold(

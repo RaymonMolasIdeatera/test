@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:prueba/domain/usecases/auth/login_user.dart'; // <-- 1. AÑADE ESTE IMPORT
 
 // Data Sources
 import '../../data/datasources/remote/auth_remote_data_source.dart';
@@ -56,6 +57,7 @@ Future<void> init() async {
       loginWithBiometric: sl(),
       loginWithOAuth: sl(),
       logout: sl(),
+      loginUser: sl(), // <-- 3. AÑADE LA NUEVA DEPENDENCIA AQUÍ
     ),
   );
 
@@ -70,11 +72,10 @@ Future<void> init() async {
 
   sl.registerFactory(() => InvitationBloc(verifyInvitation: sl()));
 
-  // CORRECCIÓN LÍNEA 102: Agregar loginWithOAuth al constructor
   sl.registerFactory(() => RegistrationBloc(
-    registerUser: sl(),
-    loginWithOAuth: sl(),
-  ));
+        registerUser: sl(),
+        loginWithOAuth: sl(),
+      ));
 
   // ===========================================
   // Use Cases
@@ -87,6 +88,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => Logout(sl()));
   sl.registerLazySingleton(() => VerifyInvitation(sl()));
   sl.registerLazySingleton(() => RegisterUser(sl()));
+  sl.registerLazySingleton(() => LoginUser(sl())); // <-- 2. AÑADE ESTA LÍNEA
+  sl.registerLazySingleton(() => VerifyPhoneAndRegister(sl())); // Asumiendo que esta corrección también la aplicaste
 
   // User Use Cases
   sl.registerLazySingleton(() => GetUserProfile(sl()));
@@ -98,7 +101,6 @@ Future<void> init() async {
   // Repository
   // ===========================================
 
-  // CORRECCIÓN LÍNEA 73: Remover parámetro loginWithOAuth que no existe en el constructor
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(
       remoteDataSource: sl(),
@@ -120,7 +122,6 @@ Future<void> init() async {
   // ===========================================
 
   // Remote Data Sources
-  // CORRECCIÓN LÍNEA 120: Cambiar localAuth por localAuthentication
   sl.registerLazySingleton<AuthRemoteDataSource>(
     () => AuthRemoteDataSourceImpl(
       supabaseClient: sl(),
@@ -152,19 +153,10 @@ Future<void> init() async {
   // External
   // ===========================================
 
-  // Supabase
   sl.registerLazySingleton<SupabaseClient>(() => Supabase.instance.client);
-
-  // Local Authentication
   sl.registerLazySingleton<LocalAuthentication>(() => LocalAuthentication());
-
-  // Connectivity
   sl.registerLazySingleton<Connectivity>(() => Connectivity());
-
-  // Device Info
   sl.registerLazySingleton<DeviceInfoPlugin>(() => DeviceInfoPlugin());
-
-  // Secure Storage
   sl.registerLazySingleton<FlutterSecureStorage>(
     () => const FlutterSecureStorage(
       aOptions: AndroidOptions(encryptedSharedPreferences: true),
@@ -174,7 +166,6 @@ Future<void> init() async {
     ),
   );
 
-  // Shared Preferences
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
 }

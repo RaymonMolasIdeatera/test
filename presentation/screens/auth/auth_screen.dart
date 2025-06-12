@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:prueba/core/constants/app_constants.dart';
-import 'package:prueba/core/di/injection_container.dart';
 import 'package:prueba/core/theme/app_colors.dart';
 import 'package:prueba/core/theme/app_text_styles.dart';
 import 'package:prueba/presentation/bloc/auth/auth_bloc.dart';
@@ -13,8 +12,6 @@ class AuthScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // --- CAMBIO: No es necesario un BlocProvider aquí si ya se provee en el router o más arriba.
-    // Vamos a asumir que el AuthBloc global ya está disponible.
     return const AuthView();
   }
 }
@@ -31,7 +28,6 @@ class _AuthViewState extends State<AuthView> with TickerProviderStateMixin {
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
 
-  // --- CAMBIO: Añadimos controladores para el formulario de login y un estado para mostrarlo/ocultarlo
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -73,7 +69,6 @@ class _AuthViewState extends State<AuthView> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  // --- CAMBIO: Nueva función para enviar el formulario de login
   void _submitLogin() {
     if (_formKey.currentState?.validate() ?? false) {
       context.read<AuthBloc>().add(LoginWithEmailPasswordRequested(
@@ -106,7 +101,6 @@ class _AuthViewState extends State<AuthView> with TickerProviderStateMixin {
                   transitionBuilder: (child, animation) {
                     return FadeTransition(opacity: animation, child: child);
                   },
-                  // --- CAMBIO: Usamos un AnimatedSwitcher para alternar entre las opciones de login y el formulario de email
                   child: _showEmailForm
                       ? _buildEmailLoginForm()
                       : _buildLoginOptions(),
@@ -119,7 +113,6 @@ class _AuthViewState extends State<AuthView> with TickerProviderStateMixin {
     );
   }
 
-  // --- CAMBIO: Widget extraído para las opciones de login (biometría, OAuth, etc.)
   Widget _buildLoginOptions() {
     return Column(
       key: const ValueKey('LoginOptions'), // Clave para el AnimatedSwitcher
@@ -191,6 +184,24 @@ class _AuthViewState extends State<AuthView> with TickerProviderStateMixin {
                 isOutlined: true,
                 icon: Icons.fingerprint,
               ),
+              const SizedBox(height: 12),
+              CryptoBankButton(
+                onPressed: () => _loginWithOAuth(context, 'google'),
+                text: 'Continue with Google',
+                width: double.infinity,
+                isOutlined: true,
+                icon: Icons.g_mobiledata,
+              ),
+              if (Theme.of(context).platform == TargetPlatform.iOS) ...[
+                const SizedBox(height: 12),
+                CryptoBankButton(
+                  onPressed: () => _loginWithOAuth(context, 'apple'),
+                  text: 'Continue with Apple',
+                  width: double.infinity,
+                  isOutlined: true,
+                  icon: Icons.apple,
+                ),
+              ],
             ],
           )
         ),
@@ -209,12 +220,11 @@ class _AuthViewState extends State<AuthView> with TickerProviderStateMixin {
     );
   }
 
-  // --- CAMBIO: Nuevo widget para el formulario de login con email
   Widget _buildEmailLoginForm() {
     return Form(
       key: _formKey,
       child: Column(
-        key: const ValueKey('EmailForm'), // Clave para el AnimatedSwitcher
+        key: const ValueKey('EmailForm'),
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Align(
