@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Cursos Online - Tailwind CSS</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a class="text-xl font-bold text-gray-800" href="#">Capacitación sercon tic</a>
+            <div class="md:hidden">
+                <button class="text-gray-800 focus:outline-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative text-white text-center">
+        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop')"></div>
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+    </header>
+
+    <main class="container mx-auto px-6 py-16">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Cursos Destacados</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transform hover:-translate-y-2 transition-transform duration-300">
+                <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=2070&auto=format&fit=crop" alt="Imagen del curso" class="w-full h-48 object-cover">
+                <div class="p-6 flex flex-col flex-grow">
+                    <h3 class="text-xl font-bold text-gray-800">Transferencia SSOS</h3>
+                    <div class="flex items-center my-3">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Instructor" class="w-8 h-8 rounded-full mr-3">
+                        <span class="text-gray-600">Claudia Britez</span>
+                    </div>
+                    <p class="text-gray-700 flex-grow">Aprende a gestionar pedidos, recepcionar mercaderías y manejar devoluciones RMA de forma eficiente.</p>
+                    <div class="mt-6 pt-4 border-t border-gray-200 flex justify-between items-center">
+                        <span class="text-2xl font-bold text-blue-600">Gs. 150.000</span>
+                        <div class="text-yellow-400">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transform hover:-translate-y-2 transition-transform duration-300">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop" alt="Imagen del curso" class="w-full h-48 object-cover">
+                <div class="p-6 flex flex-col flex-grow">
+                    <h3 class="text-xl font-bold text-gray-800">Carga de Precios Masiva</h3>
+                    <div class="flex items-center my-3">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Instructor" class="w-8 h-8 rounded-full mr-3">
+                        <span class="text-gray-600">Marcos Villalba</span>
+                    </div>
+                    <p class="text-gray-700 flex-grow">Optimiza tu tiempo aprendiendo a actualizar miles de precios en tu sistema con un solo click.</p>
+                    <div class="mt-6 pt-4 border-t border-gray-200 flex justify-between items-center">
+                        <span class="text-2xl font-bold text-blue-600">Gs. 120.000</span>
+                        <div class="text-yellow-400">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transform hover:-translate-y-2 transition-transform duration-300">
+                <img src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?q=80&w=1931&auto=format&fit=crop" alt="Imagen del curso" class="w-full h-48 object-cover">
+                <div class="p-6 flex flex-col flex-grow">
+                    <h3 class="text-xl font-bold text-gray-800">Introducción a Python</h3>
+                    <div class="flex items-center my-3">
+                        <img src="https://randomuser.me/api/portraits/men/51.jpg" alt="Instructor" class="w-8 h-8 rounded-full mr-3">
+                        <span class="text-gray-600">Carlos Ferreira</span>
+                    </div>
+                    <p class="text-gray-700 flex-grow">Da tus primeros pasos en el mundo de la programación con el lenguaje más demandado.</p>
+                    <div class="mt-6 pt-4 border-t border-gray-200 flex justify-between items-center">
+                        <span class="text-2xl font-bold text-blue-600">Gs. 200.000</span>
+                        <div class="text-yellow-400">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-gray-900 text-white">
+        <div class="container mx-auto px-6 pt-16 pb-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-1">
+                    <h5 class="text-lg font-bold mb-4">Plataforma Cursos</h5>
+                    <p class="text-gray-400">Potenciando el talento en Paraguay a través de la educación online accesible y de calidad.</p>
+                </div>
+                <div>
+                    <h5 class="text-lg font-bold mb-4">Categorías</h5>
+                    <ul>
+                        <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Negocios</a></li>
+                        <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Tecnología</a></li>
+                        <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Marketing</a></li>
+                        <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Desarrollo Personal</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-lg font-bold mb-4">Contacto</h5>
+                    <ul>
+                        <li class="mb-2 flex items-start"><i class="fas fa-home mr-3 mt-1"></i><span class="text-gray-400">Capiatá, Central, Paraguay</span></li>
+                        <li class="mb-2 flex items-center"><i class="fas fa-envelope mr-3"></i><span class="text-gray-400">info@plataformacursos.com.py</span></li>
+                        <li class="mb-2 flex items-center"><i class="fas fa-phone mr-3"></i><span class="text-gray-400">+595 981 123456</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-lg font-bold mb-4">Síguenos</h5>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in text-xl"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-gray-800 text-center text-gray-500">
+                <p>© 2025 Plataforma Cursos. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
