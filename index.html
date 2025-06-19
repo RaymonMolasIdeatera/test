@@ -3,92 +3,340 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plataforma de Cursos Online - Tailwind CSS</title>
+    <title>Capacitación Sercon Tic - Plataforma Premium</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Poppins', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out',
+                        'slide-in': 'slideIn 0.6s ease-out',
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        'hero-pattern': "url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%239C92AC\" fill-opacity=\"0.1\"%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"4\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')",
                     },
                 }
             }
         }
     </script>
-</head>
-<body class="bg-gray-50">
 
-    <nav class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <a class="text-xl font-bold text-gray-800" href="#">Capacitación Sercon Tic</a>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+            to { box-shadow: 0 0 30px rgba(59, 130, 246, 0.8); }
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 80%;
+            left: 60%;
+            animation-delay: 4s;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+
+    <!-- Navigation -->
+    <nav class="bg-white/90 backdrop-blur-lg shadow-sm sticky top-0 z-50 border-b border-gray-100">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-lg"></i>
+                    </div>
+                    <a class="text-2xl font-bold gradient-text" href="#">Capacitación Sercon Tic</a>
+                </div>
+            </div>
         </div>
     </nav>
 
-    <header class="relative text-white text-center">
-        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop')"></div>
-        <div class="absolute inset-0 bg-black opacity-50"></div>
-    </header>
-
-    <main class="container mx-auto px-6 py-16">
-        <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Capacitaciones</h2>
+    <!-- Courses Section -->
+    <main class="container mx-auto px-6 py-20">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+                Nuestras 
+                <span class="gradient-text">Capacitaciones</span>
+            </h2>
+        </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
 
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transform hover:-translate-y-2 transition-transform duration-300">
-                <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=2070&auto=format&fit=crop" alt="Imagen del curso" class="w-full h-48 object-cover">
-                <div class="p-6 flex flex-col flex-grow">
-                    <h3 class="text-xl font-bold text-gray-800">Transferencia SSOS</h3>
-                    <div class="flex items-center my-3">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Instructor" class="w-8 h-8 rounded-full mr-3">
-                        <span class="text-gray-600">Claudia Britez</span>
+            <!-- Course 1 -->
+            <div class="bg-white rounded-3xl shadow-xl overflow-hidden card-hover group">
+                <div class="relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=2070&auto=format&fit=crop" 
+                         alt="Transferencia SSOS" 
+                         class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                
+                <div class="p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-exchange-alt text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Transferencia SSOS</h3>
+                            <div class="flex items-center mt-2">
+                                <img src="https://randomuser.me/api/portraits/women/44.jpg" 
+                                     alt="Claudia Britez" 
+                                     class="w-8 h-8 rounded-full mr-3">
+                                <span class="text-gray-600 font-medium">Claudia Britez</span>
+                            </div>
+                        </div>
                     </div>
-                    <p class="text-gray-700 flex-grow">Aprende a gestionar pedidos, recepcionar mercaderías y manejar devoluciones RMA de forma eficiente.</p>
-                    <div class="mt-6 pt-4 border-t border-gray-200 flex justify-between items-center">
-                        <span class="text-2xl font-bold text-blue-600">Gs. 150.000</span>
+                    
+                    <p class="text-gray-700 mb-6 leading-relaxed">
+                        Domina la gestión de pedidos, recepción de mercaderías y manejo de devoluciones RMA con técnicas avanzadas y metodologías probadas.
+                    </p>
+                    
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center space-x-4 text-sm text-gray-500">
+                            <span><i class="fas fa-inbox mr-1"></i> 3 Sesiones</span>
+                            <span><i class="fas fa-clock mr-1"></i> 8 horas c/u</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-3xl font-bold text-blue-600">Gs. 150.000</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transform hover:-translate-y-2 transition-transform duration-300">
-                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop" alt="Imagen del curso" class="w-full h-48 object-cover">
-                <div class="p-6 flex flex-col flex-grow">
-                    <h3 class="text-xl font-bold text-gray-800">Carga de Precios Masiva</h3>
-                    <div class="flex items-center my-3">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Instructor" class="w-8 h-8 rounded-full mr-3">
-                        <span class="text-gray-600">Marcos Villalba</span>
+            <!-- Course 2 -->
+            <div class="bg-white rounded-3xl shadow-xl overflow-hidden card-hover group">
+                <div class="relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop" 
+                         alt="Carga de Precios Masiva" 
+                         class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                
+                <div class="p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-teal-600 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-tags text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Carga de Precios Masiva</h3>
+                            <div class="flex items-center mt-2">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg" 
+                                     alt="Marcos Villalba" 
+                                     class="w-8 h-8 rounded-full mr-3">
+                                <span class="text-gray-600 font-medium">Marcos Villalba</span>
+                            </div>
+                        </div>
                     </div>
-                    <p class="text-gray-700 flex-grow">Optimiza tu tiempo aprendiendo a actualizar miles de precios en tu sistema con un solo click.</p>
-                    <div class="mt-6 pt-4 border-t border-gray-200 flex justify-between items-center">
-                        <span class="text-2xl font-bold text-blue-600">Gs. 120.000</span>
+                    
+                    <p class="text-gray-700 mb-6 leading-relaxed">
+                        Revoluciona tu flujo de trabajo aprendiendo a actualizar miles de precios simultáneamente con herramientas profesionales y automatización.
+                    </p>
+                    
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center space-x-4 text-sm text-gray-500">
+                            <span><i class="fas fa-inbox mr-1"></i> 3 Sesiones</span>
+                            <span><i class="fas fa-clock mr-1"></i> 8 horas c/u</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-3xl font-bold text-green-600">Gs. 120.000</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transform hover:-translate-y-2 transition-transform duration-300">
-                <img src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?q=80&w=1931&auto=format&fit=crop" alt="Imagen del curso" class="w-full h-48 object-cover">
-                <div class="p-6 flex flex-col flex-grow">
-                    <h3 class="text-xl font-bold text-gray-800">Introducción a Python</h3>
-                    <div class="flex items-center my-3">
-                        <img src="https://randomuser.me/api/portraits/men/51.jpg" alt="Instructor" class="w-8 h-8 rounded-full mr-3">
-                        <span class="text-gray-600">Carlos Ferreira</span>
+            <!-- Course 3 -->
+            <div class="bg-white rounded-3xl shadow-xl overflow-hidden card-hover group">
+                <div class="relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?q=80&w=1931&auto=format&fit=crop" 
+                         alt="Introducción a Python" 
+                         class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                
+                <div class="p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-code text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Introducción a Python</h3>
+                            <div class="flex items-center mt-2">
+                                <img src="https://randomuser.me/api/portraits/men/51.jpg" 
+                                     alt="Carlos Ferreira" 
+                                     class="w-8 h-8 rounded-full mr-3">
+                                <span class="text-gray-600 font-medium">Carlos Ferreira</span>
+                            </div>
+                        </div>
                     </div>
-                    <p class="text-gray-700 flex-grow">Da tus primeros pasos en el mundo de la programación con el lenguaje más demandado.</p>
-                    <div class="mt-6 pt-4 border-t border-gray-200 flex justify-between items-center">
-                        <span class="text-2xl font-bold text-blue-600">Gs. 200.000</span>
+                    
+                    <p class="text-gray-700 mb-6 leading-relaxed">
+                        Inicia tu carrera en programación con el lenguaje más versátil y demandado del mercado tecnológico actual.
+                    </p>
+                    
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center space-x-4 text-sm text-gray-500">
+                            <span><i class="fas fa-inbox mr-1"></i> 3 Sesiones</span>
+                            <span><i class="fas fa-clock mr-1"></i> 8 horas c/u</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-3xl font-bold text-purple-600">Gs. 200.000</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
         </div>
     </main>
+
+    <script>
+        // Add smooth scrolling and animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate elements on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all animated elements
+            document.querySelectorAll('.animate-fade-in-up').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+                observer.observe(el);
+            });
+
+            // Add smooth scroll behavior to buttons
+            document.querySelectorAll('button, a[href^="#"]').forEach(element => {
+                element.addEventListener('click', function(e) {
+                    if (this.getAttribute('href') && this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        const target = document.querySelector(this.getAttribute('href'));
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
